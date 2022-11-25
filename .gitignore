@@ -44,5 +44,5 @@ app.*.map.json
 /android/app/release
 
 # secret_key and secret_id
-/lib/speechRecognize.dart
-/lib/translation.dart
+lib/speechRecognize.dart
+lib/translation.dart
