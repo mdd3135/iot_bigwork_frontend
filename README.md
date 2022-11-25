@@ -1,6 +1,7 @@
-# iot
+# 物联网大作业--前端
 
-A new Flutter project.
+这是物联网大作业前端代码。采用flutter框架编写
+[后端地址](https://github.com/mdd3135/iot_bigwork_backend/tree/master)
 
 ## Getting Started
 
