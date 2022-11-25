@@ -12,8 +12,8 @@ class SpeechRecognize {
     var Timestamp = dateTime.millisecondsSinceEpoch.toString().substring(0, 10);
     var Algorithm = "TC3-HMAC-SHA256";
     var CredentialScope = "$date/asr/tc3_request";
-    String SecretKey = "YOUR_SECRETKEY  ";
-    String SecretId = "YOUR_SECRETID";
+    String SecretKey = "Ulqma9C5mGWhkkfOtBYuBKGxPi5Tipmj";
+    String SecretId = "AKIDxkIbjfOvG4f17zhCRSFmDMPK3Zu1uZ9i";
 
     String HTTPRequestMethod = "POST";
     String CanonicalURI = "/";
