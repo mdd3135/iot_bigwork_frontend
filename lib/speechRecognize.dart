@@ -8,12 +8,18 @@ import 'package:http/http.dart' as http;
 class SpeechRecognize {
   static Future<String> recognize(String uri, String type) async {
     var dateTime = DateTime.now().toUtc();
-    var date = "${dateTime.year}-${dateTime.month}-${dateTime.day}";
+     String month = dateTime.month < 10
+        ? "0${dateTime.month}"
+        : dateTime.month.toString();
+    String day = dateTime.day < 10
+        ? "0${dateTime.day}"
+        : dateTime.day.toString();
+    var date = "${dateTime.year}-$month-$day";
     var Timestamp = dateTime.millisecondsSinceEpoch.toString().substring(0, 10);
     var Algorithm = "TC3-HMAC-SHA256";
     var CredentialScope = "$date/asr/tc3_request";
-    String SecretKey = "YOUR_SecretKey";
-    String SecretId = "YOUR_SecretId";
+    String SecretKey = "Ulqma9C5mGWhkkfOtBYuBKGxPi5Tipmj";
+    String SecretId = "AKIDxkIbjfOvG4f17zhCRSFmDMPK3Zu1uZ9i";
 
     String HTTPRequestMethod = "POST";
     String CanonicalURI = "/";
@@ -27,7 +33,7 @@ class SpeechRecognize {
       "SubServiceType": 2,
       "Url": uri,
       "ProjectId": 0, //废弃
-      "EngSerViceType": type == "chinese" ? "16k_zh" : "16k_en",
+      "EngSerViceType": type == "chinese" ? "16k_zh_dialect" : "16k_en",
       "VoiceFormat": "aac",
       "SourceType": 0
     };

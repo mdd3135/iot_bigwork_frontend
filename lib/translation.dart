@@ -6,14 +6,21 @@ import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
 
 class Translation {
-  static Future<String> translate(String text) async {
+  static Future<String> translate(
+      String text, String srcType, String dstType) async {
     var dateTime = DateTime.now().toUtc();
-    var date = "${dateTime.year}-${dateTime.month}-${dateTime.day}";
+    String month = dateTime.month < 10
+        ? "0${dateTime.month}"
+        : dateTime.month.toString();
+    String day = dateTime.day < 10
+        ? "0${dateTime.day}"
+        : dateTime.day.toString();
+    var date = "${dateTime.year}-$month-$day";
     var Timestamp = dateTime.millisecondsSinceEpoch.toString().substring(0, 10);
     var Algorithm = "TC3-HMAC-SHA256";
     var CredentialScope = "$date/tmt/tc3_request";
-    String SecretKey = "YOUR_SecretKey";
-    String SecretId = "YOUR_SecretId";
+    String SecretKey = "Ulqma9C5mGWhkkfOtBYuBKGxPi5Tipmj";
+    String SecretId = "AKIDxkIbjfOvG4f17zhCRSFmDMPK3Zu1uZ9i";
 
     String HTTPRequestMethod = "POST";
     String CanonicalURI = "/";
@@ -25,8 +32,8 @@ class Translation {
     var requestBody = {
       "SourceText": text,
       "ProjectId": 0,
-      "Target": "zh",
-      "Source": "en"
+      "Target": dstType,
+      "Source": srcType
     };
     var jsonRequestBody = jsonEncode(requestBody);
     String HashedRequestPayload =

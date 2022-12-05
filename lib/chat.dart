@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:iot/mqtt.dart';
 import 'package:iot/recordButton.dart';
 import 'package:iot/speechRecognize.dart';
+import 'package:iot/textToSpeech.dart';
 import 'package:iot/translation.dart';
 import 'package:iot/values.dart';
 import 'package:mqtt_client/mqtt_client.dart';
@@ -50,7 +51,54 @@ Widget _buildItem(BuildContext context, int i) {
                 borderRadius: BorderRadius.circular(10),
               ),
               title: Values.messageItems[i]["type"]! == "text"
-                  ? SelectableText(Values.messageItems[i]["content"]!)
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SelectableText(
+                            minLines: 1,
+                            maxLines: 10,
+                            Values.messageItems[i]["content"]!),
+                        Row(
+                          children: [
+                            TextButton(
+                                onPressed: () {
+                              Translation.translate(Values.messageItems[i]["content"]!, "en", "zh")
+                                  .then((value) => showDialog(
+                                      context: context,
+                                      builder: ((context) => AlertDialog(
+                                            title: const Text("英译中"),
+                                            content: SelectableText(value),
+                                            actions: [
+                                              TextButton(
+                                                  onPressed: (() {
+                                                    Navigator.of(context).pop();
+                                                  }),
+                                                  child: const Text("确定"))
+                                            ],
+                                          ))));
+                            }, child: const Text("英译中")),
+                            TextButton(
+                                onPressed: () {
+                              Translation.translate(Values.messageItems[i]["content"]!, "zh", "en")
+                                  .then((value) => showDialog(
+                                      context: context,
+                                      builder: ((context) => AlertDialog(
+                                            title: const Text("中译英"),
+                                            content: SelectableText(value),
+                                            actions: [
+                                              TextButton(
+                                                  onPressed: (() {
+                                                    Navigator.of(context).pop();
+                                                  }),
+                                                  child: const Text("确定"))
+                                            ],
+                                          ))));
+                            }, child: const Text("中译英")),
+                          ],
+                        ),
+                      ],
+                    )
+
                   : Row(
                       children: [
                         IconButton(
@@ -87,7 +135,8 @@ Widget _buildItem(BuildContext context, int i) {
                               String uri =
                                   "${Values.fileUri}/${Values.messageItems[i]["content"]}";
                               SpeechRecognize.recognize(uri, "english").then(
-                                  (value) => Translation.translate(value)
+                                  (value) => Translation.translate(
+                                          value, "en", "zh")
                                       .then((value) => showDialog(
                                           context: context,
                                           builder: ((context) => AlertDialog(
@@ -103,7 +152,30 @@ Widget _buildItem(BuildContext context, int i) {
                                                 ],
                                               )))));
                             },
-                            child: const Text("翻译"))
+                            child: const Text("英译中")),
+                        // TextButton(
+                        //     onPressed: () {
+                        //       String uri =
+                        //           "${Values.fileUri}/${Values.messageItems[i]["content"]}";
+                        //       SpeechRecognize.recognize(uri, "chinese").then(
+                        //           (value) => Translation.translate(
+                        //                   value, "zh", "en")
+                        //               .then((value) => showDialog(
+                        //                   context: context,
+                        //                   builder: ((context) => AlertDialog(
+                        //                         title: const Text("中译英"),
+                        //                         content: SelectableText(value),
+                        //                         actions: [
+                        //                           TextButton(
+                        //                               onPressed: (() {
+                        //                                 Navigator.of(context)
+                        //                                     .pop();
+                        //                               }),
+                        //                               child: const Text("确定"))
+                        //                         ],
+                        //                       )))));
+                        //     },
+                        //     child: const Text("中译英")),
                       ],
                     )))
     ],

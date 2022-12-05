@@ -107,7 +107,7 @@ class _RecordButtonState extends State<RecordButton> {
       avAudioSessionCategoryOptions:
           AVAudioSessionCategoryOptions.allowBluetooth |
               AVAudioSessionCategoryOptions.defaultToSpeaker,
-      avAudioSessionMode: AVAudioSessionMode.spokenAudio,
+      avAudioSessionMode: AVAudioSessionMode.defaultMode,
       avAudioSessionRouteSharingPolicy:
           AVAudioSessionRouteSharingPolicy.defaultPolicy,
       avAudioSessionSetActiveOptions: AVAudioSessionSetActiveOptions.none,
